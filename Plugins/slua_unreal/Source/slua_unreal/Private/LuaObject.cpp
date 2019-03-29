@@ -32,6 +32,7 @@
 #include "LuaEnums.h"
 #include "SluaUtil.h"
 #include "LuaReference.h"
+#include "LuaTable.h"
 
 namespace slua { 
 
@@ -752,6 +753,11 @@ namespace slua {
 		if (LuaWrapper::checkValue(L, p, uss, parms, i))
 			return 0;
 
+		if (uss == FLuaTableStruct) {
+			__checkLuaTable(L, p, parms, i);
+			return 0;
+		}
+
 		LuaStruct* ls = LuaObject::checkValue<LuaStruct*>(L, i);
 		if(!ls)
 			luaL_error(L, "expect struct but got nil");
@@ -984,6 +990,7 @@ namespace slua {
 		regChecker(UClassProperty::StaticClass(), checkUClassProperty);
 		
 		LuaWrapper::init(L);
+		FLuaTableWrapper::bind(L);		
 		LuaEnums::init(L);
         ExtensionMethod::init();
     }
