@@ -32,6 +32,7 @@
 #include "HAL/RunnableThread.h"
 #include "GameDelegates.h"
 #include "LuaActor.h"
+#include "LuaProtoUtils.h"
 
 namespace slua {
 
@@ -266,6 +267,7 @@ namespace slua {
         LuaClass::reg(L);
         LuaArray::reg(L);
         LuaMap::reg(L);
+		LuaProtoUtils::init(L);
 
         lua_settop(L,0);
 
