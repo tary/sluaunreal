@@ -47,61 +47,6 @@ set(LUA_SRC_FILES
 set(THIRDPART_INC_PATH "")
 set(THIRDPART_SRC_FILES "")
 
-#being third-party
-
-#being lua socket
-set(LUA_SOCKET_INC_PATH ${EXT_SRC_ROOT}/luasocket)
-set(LUA_SOCKET_SRC_PATH ${EXT_SRC_ROOT}/luasocket)
-set (LUA_SOCKET_SRC_FILES
-    ${LUA_SOCKET_SRC_PATH}/auxiliar.cpp
-    ${LUA_SOCKET_SRC_PATH}/auxiliar.h
-    ${LUA_SOCKET_SRC_PATH}/buffer.cpp
-    ${LUA_SOCKET_SRC_PATH}/buffer.h
-    ${LUA_SOCKET_SRC_PATH}/except.cpp
-    ${LUA_SOCKET_SRC_PATH}/except.h
-    ${LUA_SOCKET_SRC_PATH}/ftp.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/headers.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/http.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/inet.cpp
-    ${LUA_SOCKET_SRC_PATH}/inet.h
-    ${LUA_SOCKET_SRC_PATH}/io.cpp
-    ${LUA_SOCKET_SRC_PATH}/io.h
-    ${LUA_SOCKET_SRC_PATH}/ltn12.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/luasocket.cpp
-    ${LUA_SOCKET_SRC_PATH}/luasocket.h
-    ${LUA_SOCKET_SRC_PATH}/mbox.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/mime.cpp
-    ${LUA_SOCKET_SRC_PATH}/mime.h
-    ${LUA_SOCKET_SRC_PATH}/mime.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/options.cpp
-    ${LUA_SOCKET_SRC_PATH}/options.h
-    ${LUA_SOCKET_SRC_PATH}/select.cpp
-    ${LUA_SOCKET_SRC_PATH}/select.h
-    ${LUA_SOCKET_SRC_PATH}/serial.cpp
-    ${LUA_SOCKET_SRC_PATH}/smtp.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/socket.h
-    ${LUA_SOCKET_SRC_PATH}/socket.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/tcp.cpp
-    ${LUA_SOCKET_SRC_PATH}/tcp.h
-    ${LUA_SOCKET_SRC_PATH}/timeout.cpp
-    ${LUA_SOCKET_SRC_PATH}/timeout.h
-    ${LUA_SOCKET_SRC_PATH}/tp.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/udp.cpp
-    ${LUA_SOCKET_SRC_PATH}/udp.h
-    ${LUA_SOCKET_SRC_PATH}/unix.cpp
-    ${LUA_SOCKET_SRC_PATH}/unix.h
-    ${LUA_SOCKET_SRC_PATH}/url.lua.inc
-    ${LUA_SOCKET_SRC_PATH}/usocket.cpp
-    ${LUA_SOCKET_SRC_PATH}/usocket.h
-    ${LUA_SOCKET_SRC_PATH}/wsocket.cpp
-    ${LUA_SOCKET_SRC_PATH}/wsocket.h
-)
-#end lua socket
-
-set(THIRDPART_INC_PATH ${THIRDPART_INC_PATH} ${LUA_SOCKET_INC_PATH})
-set(THIRDPART_SRC_FILES ${THIRDPART_SRC_FILES} ${LUA_SOCKET_SRC_FILES})
-#end third-party
-
 include_directories(
     ${LUA_INC_PATH}
     ${THIRDPART_INC_PATH}
