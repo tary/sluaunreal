@@ -27,7 +27,6 @@
 #include "LuaEnums.h"
 #include "LuaArray.h"
 #include "LuaMap.h"
-#include "LuaSocketWrap.h"
 #include "LuaMemoryProfile.h"
 #include "HAL/RunnableThread.h"
 #include "GameDelegates.h"
@@ -261,7 +260,6 @@ namespace slua {
         lua_rawseti(L,loaderTable,2);
 		lua_settop(L, 0);
         
-		LuaSocket::init(L);
         LuaObject::init(L);
         SluaUtil::openLib(L);
         LuaClass::reg(L);
