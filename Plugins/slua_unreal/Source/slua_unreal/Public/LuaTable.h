@@ -1,14 +1,8 @@
 #pragma once
 #include "LuaVar.h"
+#include "LuaVarUtil.h"
 
 #include "LuaTable.generated.h"
-
-
-template <typename T>
-struct TIsFString { enum { Value = false }; };
-
-template <>
-struct TIsFString<FString> { enum { Value = true }; };
 
 template <typename T>
 struct TIsLuaTable { enum { Value = false }; };
@@ -21,7 +15,6 @@ struct TIsLuaVar { enum { Value = false }; };
 template <>
 struct TIsLuaVar<slua::LuaVar> { enum { Value = true }; };
 
-
 USTRUCT(BlueprintType)
 struct SLUA_UNREAL_API FLuaTable
 {
@@ -29,15 +22,21 @@ struct SLUA_UNREAL_API FLuaTable
 	slua::LuaVar Table;
 
 	template<typename R, typename T>
-	typename std::enable_if<TIsFString<R>::Value, bool>::type GetFromTable(T key, R& OutResult) const
+	typename std::enable_if<TIsTArray<R>::Value || slua::TIsTMap<R>::Value, bool>::type GetFromTable(T key, R& OutResult) const
+	{
+		if (Table.isNil() || !Table.isValid() || !Table.isTable()) { return false; }
+		slua::LuaVar arrVar;
+		Table.getFromTable<slua::LuaVar>(key, arrVar);
+		return slua::getFromVar(arrVar, OutResult);
+	}
+
+	template<typename R, typename T>
+	typename std::enable_if<slua::TIsFString<R>::Value, bool>::type GetFromTable(T key, R& OutResult) const
 	{
 		if (Table.isNil() || !Table.isValid() || !Table.isTable()) { return false; }
 		slua::LuaVar strVar;
 		Table.getFromTable<slua::LuaVar>(key, strVar);
-
-		if (strVar.isNil() || !strVar.isValid() || !strVar.isString()) { return false; }
-		OutResult = UTF8_TO_TCHAR(strVar.asString());
-		return true;
+		return slua::getFromVar(strVar, OutResult);
 	}
 
 	template<typename R, typename T>
@@ -61,7 +60,7 @@ struct SLUA_UNREAL_API FLuaTable
 	}
 
 	template<typename R, typename T>
-	typename std::enable_if<!TIsFString<R>::Value && !TIsLuaTable<R>::Value && !TIsLuaVar<R>::Value, bool>::type GetFromTable(T key, R& OutResult) const
+	typename std::enable_if<!slua::TIsFString<R>::Value && !TIsLuaTable<R>::Value && !TIsLuaVar<R>::Value && !slua::TIsTMap<R>::Value && !TIsTArray<R>::Value, bool>::type GetFromTable(T key, R& OutResult) const
 	{
 		if (Table.isNil() || !Table.isValid() || !Table.isTable()) { return false; }
 		Table.getFromTable<R>(key, OutResult);
